@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* FreeOllee2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* FreeOllee2App.swift */; };
+		A1000000000000000000000A /* OlleeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* OlleeClient.swift */; };
 		A10000000000000000000002 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* Assets.xcassets */; };
 		A10000000000000000000004 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* CRC16.swift */; };
 		A10000000000000000000005 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* Frame.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		A20000000000000000000001 /* FreeOllee2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeOllee2App.swift; sourceTree = "<group>"; };
+		A2000000000000000000000C /* OlleeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeClient.swift; sourceTree = "<group>"; };
 		A20000000000000000000002 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A20000000000000000000003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000000000000000000004 /* FreeOllee2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeOllee2.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				A20000000000000000000001 /* FreeOllee2App.swift */,
+				A2000000000000000000000C /* OlleeClient.swift */,
 				A20000000000000000000002 /* Assets.xcassets */,
 				A20000000000000000000003 /* Info.plist */,
 			);
@@ -151,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000001 /* FreeOllee2App.swift in Sources */,
+				A1000000000000000000000A /* OlleeClient.swift in Sources */,
 				A10000000000000000000004 /* CRC16.swift in Sources */,
 				A10000000000000000000005 /* Frame.swift in Sources */,
 				A10000000000000000000006 /* NameTag.swift in Sources */,
