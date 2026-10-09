@@ -1,0 +1,13 @@
+.DS_Store
+.build/
+.swiftpm/
+Package.resolved
+xcuserdata/
+DerivedData/
+*.xcuserstate
+.env
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
