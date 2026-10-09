@@ -18,7 +18,7 @@ struct ContentView: View {
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                     .accessibilityLabel(
-                        "Original homage: an Ollee watch leaping from the ocean in place of an orca"
+                        "Pixel orca leaping from the ocean, a digital watch strapped around the sun"
                     )
                 nameTagRow
                 Button("Beep", action: beep)
@@ -113,7 +113,6 @@ struct ContentView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Arthur86000 / FreeOllee")
             Text("Ollee Watch by Ollee Technologies Inc.")
-            Text("Hero art is an original ocean homage: the Ollee watch leaps in place of an orca. Not the Free Willy 2 poster, and no studio stills.")
         }
         .font(.footnote)
         .foregroundStyle(.secondary)
