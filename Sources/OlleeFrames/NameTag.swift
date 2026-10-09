@@ -7,7 +7,7 @@ public enum NameTag {
             throw NameTagError.notASCII
         }
         let clamped = String(text.prefix(maxLength))
-        let padded = clamped.padding(toLength: maxLength, withPad: " ", startingAt: 0)
+        let padded = clamped + String(repeating: " ", count: maxLength - clamped.count)
         return Frame(target: target, payload: Array(padded.utf8))
     }
 }

@@ -38,7 +38,7 @@ final class NameTagTests: XCTestCase {
         let parsed = try XCTUnwrap(Frame.parse(bytes))
         XCTAssertEqual(parsed.command, 0x02)
         XCTAssertEqual(parsed.target, 0x4E)
-        XCTAssertEqual(String(bytes: parsed.payload, encoding: .ascii), " 54 F")
+        XCTAssertEqual(String(bytes: parsed.payload, encoding: .ascii), "  54 F")
     }
 
     func testParseRejectsBadMagic() {
