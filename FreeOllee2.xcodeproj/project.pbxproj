@@ -12,6 +12,9 @@
 		A10000000000000000000004 /* CRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000006 /* CRC16.swift */; };
 		A10000000000000000000005 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* Frame.swift */; };
 		A10000000000000000000006 /* NameTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* NameTag.swift */; };
+		A10000000000000000000007 /* Beep.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* Beep.swift */; };
+		A10000000000000000000008 /* ClockCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ClockCounter.swift */; };
+		A10000000000000000000009 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* Light.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		A20000000000000000000006 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
 		A20000000000000000000007 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		A20000000000000000000008 /* NameTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTag.swift; sourceTree = "<group>"; };
+		A20000000000000000000009 /* Beep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beep.swift; sourceTree = "<group>"; };
+		A2000000000000000000000A /* ClockCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockCounter.swift; sourceTree = "<group>"; };
+		A2000000000000000000000B /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +71,11 @@
 		A40000000000000000000004 /* OlleeFrames */ = {
 			isa = PBXGroup;
 			children = (
+				A20000000000000000000009 /* Beep.swift */,
+				A2000000000000000000000A /* ClockCounter.swift */,
 				A20000000000000000000006 /* CRC16.swift */,
 				A20000000000000000000007 /* Frame.swift */,
+				A2000000000000000000000B /* Light.swift */,
 				A20000000000000000000008 /* NameTag.swift */,
 			);
 			path = Sources/OlleeFrames;
@@ -145,6 +154,9 @@
 				A10000000000000000000004 /* CRC16.swift in Sources */,
 				A10000000000000000000005 /* Frame.swift in Sources */,
 				A10000000000000000000006 /* NameTag.swift in Sources */,
+				A10000000000000000000007 /* Beep.swift in Sources */,
+				A10000000000000000000008 /* ClockCounter.swift in Sources */,
+				A10000000000000000000009 /* Light.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
