@@ -1,0 +1,27 @@
+{
+  "name": "Ollee clock counter from notifications",
+  "note": "Rebuild in the Shortcuts app. Not a signed .shortcut; the user must Import and pick apps.",
+  "trigger": {
+    "type": "notificationReceived",
+    "apps": ["USER_PICKS_THESE"],
+    "requires": "iOS 27 for Notification automations inside a shared shortcut"
+  },
+  "variables": {
+    "OlleeCount": { "type": "Number", "default": 0 }
+  },
+  "actions": [
+    { "type": "getVariable", "name": "OlleeCount" },
+    { "type": "calculate", "expression": "OlleeCount + 1" },
+    { "type": "calculate", "expression": "min(result, 7)" },
+    { "type": "setVariable", "name": "OlleeCount", "value": "result" },
+    {
+      "type": "appIntent",
+      "app": "Free Ollee 2",
+      "intent": "SetOlleeClockCounterIntent",
+      "parameters": { "count": "OlleeCount" }
+    }
+  ],
+  "reset": {
+    "note": "Builder-owned. Example: a separate shortcut that sets OlleeCount to 0 and runs Set Ollee clock counter with 0."
+  }
+}
