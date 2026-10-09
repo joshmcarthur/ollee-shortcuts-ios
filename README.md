@@ -8,7 +8,6 @@ This is original Swift. It is not a port of [Arthur86000/FreeOllee](https://gith
 
 - [Arthur86000/FreeOllee](https://github.com/Arthur86000/FreeOllee) — first open companion; thank you.
 - Ollee Watch by Ollee Technologies Inc.
-- Hero art is an original orca/ocean homage. It is not the *Free Willy 2* movie poster and does not embed studio stills.
 
 ## Requirements
 
