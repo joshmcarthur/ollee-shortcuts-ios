@@ -53,4 +53,24 @@ public struct Frame: Equatable, Sendable {
     public static func read(target: UInt8) -> Frame {
         Frame(target: target, payload: [])
     }
+
+    /// Reassembles notify fragments into frames. Drains every complete frame in the buffer.
+    struct Assembler {
+        private var buffer: [UInt8] = []
+
+        mutating func push(_ chunk: [UInt8]) -> [Frame] {
+            buffer += chunk
+            var frames: [Frame] = []
+            while buffer.count >= 2 {
+                let total = 2 + Int(buffer[1])
+                guard buffer.count >= total else { break }
+                let bytes = Array(buffer.prefix(total))
+                buffer.removeFirst(total)
+                if let frame = Frame.parse(bytes) {
+                    frames.append(frame)
+                }
+            }
+            return frames
+        }
+    }
 }

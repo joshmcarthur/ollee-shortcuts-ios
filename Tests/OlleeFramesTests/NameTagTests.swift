@@ -52,6 +52,23 @@ final class NameTagTests: XCTestCase {
         XCTAssertEqual(chunks[0].count, 20)
         XCTAssertEqual(chunks[1], [20, 21, 22, 23, 24])
     }
+
+    func testAssemblerDrainsTwoCompleteFramesFromOnePush() throws {
+        let first = try NameTag.frame(text: "Hello").encoded()
+        let second = try NameTag.frame(text: "World").encoded()
+        var assembler = Frame.Assembler()
+        XCTAssertEqual(assembler.push(first + second).map(\.payload), [
+            Array("Hello ".utf8),
+            Array("World ".utf8),
+        ])
+    }
+
+    func testAssemblerReassemblesASplitFrame() throws {
+        let encoded = try NameTag.frame(text: "Hello").encoded()
+        var assembler = Frame.Assembler()
+        XCTAssertTrue(assembler.push(Array(encoded.prefix(8))).isEmpty)
+        XCTAssertEqual(assembler.push(Array(encoded.dropFirst(8))).first?.payload, Array("Hello ".utf8))
+    }
 }
 
 private func hex(_ string: String) -> [UInt8] {
