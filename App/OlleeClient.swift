@@ -56,8 +56,7 @@ final class OlleeClient: NSObject, ObservableObject {
     func scan() {
         lastError = nil
         guard central.state == .poweredOn else {
-            state = .poweredOff
-            lastError = "Bluetooth is off"
+            noteBluetoothOff()
             return
         }
         state = .scanning
@@ -141,6 +140,11 @@ final class OlleeClient: NSObject, ObservableObject {
         if state == .ready { return }
         state = .idle
     }
+
+    private func noteBluetoothOff() {
+        state = .poweredOff
+        lastError = "Bluetooth is off"
+    }
 }
 
 extension OlleeClient: CBCentralManagerDelegate {
@@ -154,8 +158,7 @@ extension OlleeClient: CBCentralManagerDelegate {
                     self.connect(known)
                 }
             case .poweredOff:
-                self.state = .poweredOff
-                self.lastError = "Bluetooth is off"
+                self.noteBluetoothOff()
             case .resetting, .unauthorized, .unknown, .unsupported:
                 break
             @unknown default:
@@ -187,11 +190,19 @@ extension OlleeClient: CBCentralManagerDelegate {
         }
     }
 
-    nonisolated func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
+    nonisolated func centralManager(
+        _ central: CBCentralManager,
+        didFailToConnect peripheral: CBPeripheral,
+        error: Error?
+    ) {
         Task { @MainActor in self.fail(error?.localizedDescription ?? "Connect failed") }
     }
 
-    nonisolated func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
+    nonisolated func centralManager(
+        _ central: CBCentralManager,
+        didDisconnectPeripheral peripheral: CBPeripheral,
+        error: Error?
+    ) {
         Task { @MainActor in
             self.rx = nil
             self.tx = nil
@@ -209,7 +220,11 @@ extension OlleeClient: CBPeripheralDelegate {
         }
     }
 
-    nonisolated func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    nonisolated func peripheral(
+        _ peripheral: CBPeripheral,
+        didDiscoverCharacteristicsFor service: CBService,
+        error: Error?
+    ) {
         Task { @MainActor in
             if let error { self.fail(error.localizedDescription); return }
             for characteristic in service.characteristics ?? [] {
@@ -226,7 +241,11 @@ extension OlleeClient: CBPeripheralDelegate {
         }
     }
 
-    nonisolated func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    nonisolated func peripheral(
+        _ peripheral: CBPeripheral,
+        didUpdateValueFor characteristic: CBCharacteristic,
+        error: Error?
+    ) {
         guard let data = characteristic.value else { return }
         Task { @MainActor in
             if let error { self.lastError = error.localizedDescription; return }
