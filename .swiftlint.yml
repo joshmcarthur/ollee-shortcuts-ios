@@ -1,0 +1,19 @@
+included:
+  - App
+  - Sources
+  - Tests
+excluded:
+  - .build
+  - .swiftpm
+disabled_rules:
+  - todo
+  - trailing_comma
+line_length:
+  warning: 120
+  error: 160
+identifier_name:
+  min_length: 2
+  excluded:
+    - n
+    - id
+reporter: xcode
