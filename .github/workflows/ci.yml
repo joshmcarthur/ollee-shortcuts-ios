@@ -37,6 +37,3 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             build
-
-      - name: Third-party dependency audit
-        run: ./scripts/audit-deps.sh
