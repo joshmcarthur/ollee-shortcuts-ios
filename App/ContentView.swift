@@ -1,3 +1,4 @@
+import AppIntents
 import SwiftUI
 import UIKit
 
@@ -26,6 +27,7 @@ struct ContentView: View {
                     .disabled(busy)
                 lightRow
                 counterRow
+                ShortcutsLink()
                 if let message {
                     Text(message)
                         .font(.footnote)
