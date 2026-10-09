@@ -129,7 +129,7 @@ struct ContentView: View {
 
     private func showLight() {
         let rgb = lightColor.rgbBytes
-        Task { await run { try await ollee.showLight(red: rgb.0, green: rgb.1, blue: rgb.2) } }
+        Task { await run { try await ollee.showLight(red: rgb.red, green: rgb.green, blue: rgb.blue) } }
     }
 
     private func run(_ work: @escaping () async throws -> Void) async {
@@ -152,15 +152,25 @@ struct ContentView: View {
     }
 }
 
+private struct RGBBytes {
+    let red: UInt8
+    let green: UInt8
+    let blue: UInt8
+}
+
 private extension Color {
-    var rgbBytes: (UInt8, UInt8, UInt8) {
+    var rgbBytes: RGBBytes {
         let ui = UIColor(self)
         var red: CGFloat = 0
         var green: CGFloat = 0
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
         ui.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return (UInt8(red * 255), UInt8(green * 255), UInt8(blue * 255))
+        return RGBBytes(
+            red: UInt8(red * 255),
+            green: UInt8(green * 255),
+            blue: UInt8(blue * 255)
+        )
     }
 }
 
