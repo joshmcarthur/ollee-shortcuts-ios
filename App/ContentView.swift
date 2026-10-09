@@ -139,13 +139,11 @@ struct ContentView: View {
         defer { busy = false }
         do {
             try await work()
-            message = ollee.lastError
+            message = nil
         } catch OlleeError.lightUnpublished {
             message = "RGB backlight write is not in the published command catalogue."
         } catch OlleeError.notReady {
             message = "Watch is not connected. Hold ALARM on Clock, or tap until LAP blinks."
-        } catch OlleeError.bluetoothOff {
-            message = "Bluetooth is off."
         } catch OlleeError.timeout {
             message = "The watch did not answer in time."
         } catch {
