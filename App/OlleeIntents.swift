@@ -26,6 +26,12 @@ struct BeepOlleeIntent: AppIntent {
     }
 }
 
+private struct RGBBytes {
+    let red: UInt8
+    let green: UInt8
+    let blue: UInt8
+}
+
 enum OlleeLightPreset: String, AppEnum {
     case red, green, blue, cyan, white, orange
 
@@ -39,14 +45,14 @@ enum OlleeLightPreset: String, AppEnum {
         .orange: "Orange",
     ]
 
-    var rgb: (UInt8, UInt8, UInt8) {
+    var rgb: RGBBytes {
         switch self {
-        case .red: return (255, 40, 40)
-        case .green: return (40, 220, 80)
-        case .blue: return (40, 80, 255)
-        case .cyan: return (40, 210, 190)
-        case .white: return (255, 255, 255)
-        case .orange: return (255, 140, 40)
+        case .red: return RGBBytes(red: 255, green: 40, blue: 40)
+        case .green: return RGBBytes(red: 40, green: 220, blue: 80)
+        case .blue: return RGBBytes(red: 40, green: 80, blue: 255)
+        case .cyan: return RGBBytes(red: 40, green: 210, blue: 190)
+        case .white: return RGBBytes(red: 255, green: 255, blue: 255)
+        case .orange: return RGBBytes(red: 255, green: 140, blue: 40)
         }
     }
 }
@@ -60,7 +66,11 @@ struct SetOlleeLightIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult {
-        try await OlleeClient.shared.showLight(red: color.rgb.0, green: color.rgb.1, blue: color.rgb.2)
+        try await OlleeClient.shared.showLight(
+            red: color.rgb.red,
+            green: color.rgb.green,
+            blue: color.rgb.blue
+        )
         return .result()
     }
 }
