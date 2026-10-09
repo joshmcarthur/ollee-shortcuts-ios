@@ -16,28 +16,39 @@ enum ConnectionState: Equatable {
     case ready
 }
 
-/// CoreBluetooth adapter. Commands go through `OlleeSession` (same façade as tests).
-final class CoreBluetoothNUS: NUSLink, @unchecked Sendable {
-    var onWrite: (([UInt8]) -> Void)?
-    let incoming: AsyncStream<[UInt8]>
+/// GATT byte pipe. Created after RX exists; chunks writes; throws once finished.
+@MainActor
+final class CoreBluetoothNUS: NUSLink {
+    private let peripheral: CBPeripheral
+    private let rx: CBCharacteristic
     private let continuation: AsyncStream<[UInt8]>.Continuation
+    let incoming: AsyncStream<[UInt8]>
+    private var alive = true
 
-    init() {
+    init(peripheral: CBPeripheral, rx: CBCharacteristic) {
+        self.peripheral = peripheral
+        self.rx = rx
         var cont: AsyncStream<[UInt8]>.Continuation!
-        incoming = AsyncStream(bufferingPolicy: .bufferingOldest(16)) { cont = $0 }
+        incoming = AsyncStream { cont = $0 }
         continuation = cont
     }
 
-    func connect() async throws {}
-
-    func write(_ chunks: [[UInt8]]) async throws {
-        for chunk in chunks {
-            onWrite?(chunk)
+    func write(_ bytes: [UInt8]) async throws {
+        guard alive else { throw OlleeError.notReady }
+        let type: CBCharacteristicWriteType =
+            rx.properties.contains(.write) ? .withResponse : .withoutResponse
+        for chunk in Frame.attChunks(bytes) {
+            peripheral.writeValue(Data(chunk), for: rx, type: type)
         }
     }
 
     func ingest(_ bytes: [UInt8]) {
         continuation.yield(bytes)
+    }
+
+    func finish() {
+        alive = false
+        continuation.finish()
     }
 }
 
@@ -55,17 +66,11 @@ final class OlleeClient: NSObject, ObservableObject {
     private var tx: CBCharacteristic?
     private var radio: CoreBluetoothNUS?
     private var session: OlleeSession?
-    private var worldTimeHeader: [UInt8]
 
     private let savedUUIDKey = "ollee.peripheralUUID"
     private let headerKey = "ollee.worldTimeHeader"
 
     override init() {
-        if let saved = UserDefaults.standard.data(forKey: headerKey), saved.count == ClockCounter.headerSize {
-            worldTimeHeader = Array(saved)
-        } else {
-            worldTimeHeader = [0, 0, 0, 0]
-        }
         super.init()
         central = CBCentralManager(delegate: self, queue: .main)
     }
@@ -90,9 +95,8 @@ final class OlleeClient: NSObject, ObservableObject {
 
     func setClockCounter(_ count: Int) async throws {
         let session = try commands()
+        defer { UserDefaults.standard.set(Data(session.worldTimeHeader), forKey: headerKey) }
         try await session.setClockCounter(count)
-        worldTimeHeader = session.worldTimeHeader
-        UserDefaults.standard.set(Data(worldTimeHeader), forKey: headerKey)
     }
 
     func showLight(red: UInt8, green: UInt8, blue: UInt8) async throws {
@@ -102,6 +106,13 @@ final class OlleeClient: NSObject, ObservableObject {
     private func commands() throws -> OlleeSession {
         guard let session else { throw OlleeError.notReady }
         return session
+    }
+
+    private func storedWorldTimeHeader() -> [UInt8] {
+        if let saved = UserDefaults.standard.data(forKey: headerKey), saved.count == ClockCounter.headerSize {
+            return Array(saved)
+        }
+        return [0, 0, 0, 0]
     }
 
     private func connect(_ peripheral: CBPeripheral) {
@@ -123,26 +134,21 @@ final class OlleeClient: NSObject, ObservableObject {
         lastError = "Bluetooth is off"
     }
 
+    private func dropRadio() {
+        session?.stop()
+        radio?.finish()
+        session = nil
+        radio = nil
+    }
+
     private func attachSession() {
-        let radio = CoreBluetoothNUS()
-        radio.onWrite = { [weak self] chunk in
-            guard let self, let peripheral = self.peripheral, let rx = self.rx else { return }
-            let type: CBCharacteristicWriteType =
-                rx.properties.contains(.write) ? .withResponse : .withoutResponse
-            peripheral.writeValue(Data(chunk), for: rx, type: type)
-        }
+        guard let peripheral, let rx else { return }
+        dropRadio()
+        let radio = CoreBluetoothNUS(peripheral: peripheral, rx: rx)
         self.radio = radio
-        let session = OlleeSession(link: radio, worldTimeHeader: worldTimeHeader)
-        self.session = session
-        Task { @MainActor in
-            do {
-                try await session.connect()
-                self.state = .ready
-                self.lastError = nil
-            } catch {
-                self.fail(error.localizedDescription)
-            }
-        }
+        session = OlleeSession(link: radio, worldTimeHeader: storedWorldTimeHeader())
+        state = .ready
+        lastError = nil
     }
 }
 
@@ -203,10 +209,9 @@ extension OlleeClient: CBCentralManagerDelegate {
         error: Error?
     ) {
         Task { @MainActor in
+            self.dropRadio()
             self.rx = nil
             self.tx = nil
-            self.radio = nil
-            self.session = nil
             self.state = .idle
             if let error { self.lastError = error.localizedDescription }
         }
