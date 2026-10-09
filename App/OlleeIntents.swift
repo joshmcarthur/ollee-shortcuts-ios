@@ -1,5 +1,4 @@
 import AppIntents
-import SwiftUI
 
 struct SetOlleeTextIntent: AppIntent {
     static var title: LocalizedStringResource = "Set Ollee text"

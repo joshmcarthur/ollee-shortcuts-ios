@@ -17,7 +17,6 @@ enum ConnectionState: Equatable {
 }
 
 enum OlleeError: Error, Equatable {
-    case bluetoothOff
     case notReady
     case timeout
     case lightUnpublished
