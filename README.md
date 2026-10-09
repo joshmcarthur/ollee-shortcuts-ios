@@ -6,7 +6,7 @@ The codebase is original Swift rather than a port of [Arthur86000/FreeOllee](htt
 
 ## Credits
 
-- [Arthur86000/FreeOllee](https://github.com/Arthur86000/FreeOllee), the first open companion
+- [Arthur86000/FreeOllee](https://github.com/Arthur86000/FreeOllee), the first open companion, thank you
 - Ollee Watch by Ollee Technologies Inc.
 
 ## Requirements
