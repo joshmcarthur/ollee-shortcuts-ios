@@ -94,7 +94,7 @@ struct OlleeShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SetOlleeTextIntent(),
             phrases: [
-                "Set Ollee text \(\.$text) with \(.applicationName)",
+                "Set Ollee text with \(.applicationName)",
             ],
             shortTitle: "Set Ollee text",
             systemImageName: "textformat"
@@ -118,7 +118,7 @@ struct OlleeShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SetOlleeClockCounterIntent(),
             phrases: [
-                "Set Ollee clock counter \(\.$count) with \(.applicationName)",
+                "Set Ollee clock counter with \(.applicationName)",
             ],
             shortTitle: "Set clock counter",
             systemImageName: "number"
