@@ -45,7 +45,7 @@ enum OlleeLightPreset: String, AppEnum {
         .orange: "Orange",
     ]
 
-    var rgb: RGBBytes {
+    fileprivate var rgb: RGBBytes {
         switch self {
         case .red: return RGBBytes(red: 255, green: 40, blue: 40)
         case .green: return RGBBytes(red: 40, green: 220, blue: 80)
