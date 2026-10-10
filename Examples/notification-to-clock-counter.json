@@ -16,7 +16,7 @@
     { "type": "setVariable", "name": "OlleeCount", "value": "result" },
     {
       "type": "appIntent",
-      "app": "Wrist Shortcuts",
+      "app": "Free Ollee 2",
       "intent": "SetOlleeClockCounterIntent",
       "parameters": { "count": "OlleeCount" }
     }
