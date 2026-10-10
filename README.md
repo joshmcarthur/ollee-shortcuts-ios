@@ -1,8 +1,8 @@
-# Free Ollee 2
+# Watch connectivity through Apple Shortcuts
 
 Native iPhone companion for the [Ollee Watch](https://www.olleewatch.com/). Pair over Bluetooth, set a 6-character name tag, beep, show a clock-face counter from 0 to 7, and run the same actions from Shortcuts on your phone or Apple Watch. RGB backlight is not in the public command catalogue yet, as described under Light below.
 
-The codebase is original Swift rather than a port of [Arthur86000/FreeOllee](https://github.com/Arthur86000/FreeOllee) or Super FreeOllee. Frames follow published notes (Nordic UART, CRC-16/CCITT-FALSE, name-tag target `0x2F`) and Gadgetbridge's Ollee work (PR 6411 lineage).
+The app surfaces the phone's BLE session through App Intents, so Shortcuts on iPhone or Apple Watch can drive the watch. It is similar in spirit to [Arthur86000/FreeOllee](https://github.com/Arthur86000/FreeOllee), the first open companion for the same hardware, and the Swift here is original rather than a fork or extension of that project or of Super FreeOllee. Frames follow published notes (Nordic UART, CRC-16/CCITT-FALSE, name-tag target `0x2F`) and Gadgetbridge's Ollee work (PR 6411 lineage).
 
 ## Credits
 

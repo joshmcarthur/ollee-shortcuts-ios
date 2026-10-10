@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Free Ollee 2</string>
+	<string>Wrist Shortcuts</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Free Ollee 2 talks to your Ollee Watch over Bluetooth to set the name tag, beep, light, and clock counter.</string>
+	<string>This app talks to your Ollee Watch over Bluetooth to set the name tag, beep, light, and clock counter.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Free Ollee 2 talks to your Ollee Watch over Bluetooth to set the name tag, beep, light, and clock counter.</string>
+	<string>This app talks to your Ollee Watch over Bluetooth to set the name tag, beep, light, and clock counter.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>

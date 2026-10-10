@@ -20,7 +20,7 @@ Reset is another shortcut that sets the counter to 0, or a time-of-day automatio
 3. Add **Get Variable** / **Set Variable** named `OlleeCount` (Number, default 0).
 4. Add **Calculate**: `OlleeCount + 1`.
 5. Add **Calculate**: `Minimum` of that result and `7`.
-6. Add **Set Ollee clock counter** (from Free Ollee 2) with the clamped number.
+6. Add **Set Ollee clock counter** (from this app) with the clamped number.
 7. Add **Set Variable** `OlleeCount` to the clamped number so the next notification continues from there.
 
 The same intent is in the App Shortcuts list the in-app Shortcuts link opens. You can run **Set Ollee clock counter** by itself to test pairing (0 through 7) before wiring notifications.
