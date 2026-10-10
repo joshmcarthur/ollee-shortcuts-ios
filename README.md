@@ -1,4 +1,4 @@
-# Watch connectivity through Apple Shortcuts
+# Ollee Shortcuts
 
 Native iPhone companion for the [Ollee Watch](https://www.olleewatch.com/). Pair over Bluetooth, set a 6-character name tag, beep, show a clock-face counter from 0 to 7, and run the same actions from Shortcuts on your phone or Apple Watch. RGB backlight is not in the public command catalogue yet, as described under Light below.
 

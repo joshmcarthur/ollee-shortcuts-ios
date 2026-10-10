@@ -16,7 +16,7 @@
     { "type": "setVariable", "name": "OlleeCount", "value": "result" },
     {
       "type": "appIntent",
-      "app": "Free Ollee 2",
+      "app": "Ollee Shortcuts",
       "intent": "SetOlleeClockCounterIntent",
       "parameters": { "count": "OlleeCount" }
     }
