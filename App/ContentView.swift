@@ -10,53 +10,38 @@ struct ContentView: View {
     @State private var busy = false
     @State private var message: String?
 
+    private var linked: Bool { ollee.state == .ready }
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                connectionChip
-                deviceMenu
-                Image("Hero")
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                    .accessibilityLabel(
-                        "Pixel orca leaping from the ocean, a digital watch strapped around the sun"
-                    )
-                nameTagRow
-                Button("Beep", action: beep)
-                    .buttonStyle(.borderedProminent)
-                    .disabled(busy)
-                lightRow
-                counterRow
+        Form {
+            deviceSection
+            nameTagSection
+            beepSection
+            lightSection
+            counterSection
+            Section {
                 ShortcutsLink()
-                if let banner = message ?? ollee.lastError {
+            }
+            if let banner = message ?? ollee.lastError {
+                Section {
                     Text(banner)
-                        .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
+            }
+            Section {
                 credits
             }
-            .padding()
         }
         .disabled(busy)
     }
 
-    private var connectionChip: some View {
-        Button(action: ollee.scan) {
-            Label(chipTitle, systemImage: chipSymbol)
-                .font(.subheadline.weight(.semibold))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(.thinMaterial, in: Capsule())
-        }
-        .buttonStyle(.plain)
-        .accessibilityHint("Scan or pick a device. Hold ALARM on Clock, or tap until LAP blinks.")
-    }
-
-    @ViewBuilder
-    private var deviceMenu: some View {
-        if ollee.state == .scanning, !ollee.candidates.isEmpty {
-            VStack(alignment: .leading, spacing: 8) {
+    private var deviceSection: some View {
+        Section {
+            Button(action: ollee.scan) {
+                Label(chipTitle, systemImage: chipSymbol)
+            }
+            .accessibilityHint("Scan or pick an Ollee. Hold ALARM on Clock, or tap until LAP blinks.")
+            if ollee.state == .scanning {
                 ForEach(ollee.candidates) { candidate in
                     Button {
                         ollee.connect(to: candidate.id)
@@ -66,14 +51,16 @@ struct ContentView: View {
                             Spacer()
                             if candidate.isLastUsed {
                                 Text("last used")
-                                    .font(.footnote)
                                     .foregroundStyle(.secondary)
                             }
                         }
                     }
-                    .buttonStyle(.bordered)
                 }
             }
+        } header: {
+            Text("Ollee")
+        } footer: {
+            Text("Hold ALARM on Clock, or tap until LAP blinks.")
         }
     }
 
@@ -82,13 +69,13 @@ struct ContentView: View {
         case .poweredOff:
             return "Bluetooth off"
         case .idle:
-            return "Scan · hold ALARM or tap until LAP blinks"
+            return "Scan"
         case .scanning:
             return "Scanning…"
         case .connecting:
             return "Connecting…"
         case .ready:
-            return ollee.deviceName ?? "Connected"
+            return ollee.deviceName ?? "Ollee"
         }
     }
 
@@ -105,8 +92,8 @@ struct ContentView: View {
         }
     }
 
-    private var nameTagRow: some View {
-        HStack {
+    private var nameTagSection: some View {
+        Section("Name tag") {
             TextField("Name tag", text: $nameTag)
                 .textInputAutocapitalization(.characters)
                 .disableAutocorrection(true)
@@ -116,23 +103,30 @@ struct ContentView: View {
                     }
                 }
             Button("Set", action: setName)
-                .disabled(busy)
+                .disabled(!linked)
         }
     }
 
-    private var lightRow: some View {
-        HStack {
-            ColorPicker("Light", selection: $lightColor, supportsOpacity: false)
+    private var beepSection: some View {
+        Section("Beep") {
+            Button("Beep", action: beep)
+                .disabled(!linked)
+        }
+    }
+
+    private var lightSection: some View {
+        Section("Light") {
+            ColorPicker("Color", selection: $lightColor, supportsOpacity: false)
             Button("Show light", action: showLight)
-                .disabled(busy)
+                .disabled(!linked)
         }
     }
 
-    private var counterRow: some View {
-        HStack {
+    private var counterSection: some View {
+        Section("Clock counter") {
             Stepper("Clock counter \(counter)", value: $counter, in: 0...7)
             Button("Set") { Task { await run { try await ollee.setClockCounter(counter) } } }
-                .disabled(busy)
+                .disabled(!linked)
         }
     }
 
@@ -143,7 +137,6 @@ struct ContentView: View {
         }
         .font(.footnote)
         .foregroundStyle(.secondary)
-        .padding(.top, 8)
     }
 
     private func setName() {
@@ -168,9 +161,9 @@ struct ContentView: View {
         } catch OlleeError.lightUnpublished {
             message = "RGB backlight write is not in the published command catalogue."
         } catch OlleeError.notReady {
-            message = "Watch is not connected. Hold ALARM on Clock, or tap until LAP blinks."
+            message = "Ollee is not connected. Hold ALARM on Clock, or tap until LAP blinks."
         } catch OlleeError.timeout {
-            message = "The watch did not answer in time."
+            message = "Ollee did not answer in time."
         } catch {
             message = error.localizedDescription
         }
