@@ -19,6 +19,7 @@
 		A10000000000000000000008 /* ClockCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000A /* ClockCounter.swift */; };
 		A10000000000000000000009 /* Light.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000B /* Light.swift */; };
 		A1000000000000000000000D /* OlleeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000F /* OlleeSession.swift */; };
+		A1000000000000000000000E /* OlleeAdvertisement.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* OlleeAdvertisement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A2000000000000000000000A /* ClockCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockCounter.swift; sourceTree = "<group>"; };
 		A2000000000000000000000B /* Light.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Light.swift; sourceTree = "<group>"; };
 		A2000000000000000000000F /* OlleeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeSession.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* OlleeAdvertisement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeAdvertisement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				A20000000000000000000007 /* Frame.swift */,
 				A2000000000000000000000B /* Light.swift */,
 				A20000000000000000000008 /* NameTag.swift */,
+				A20000000000000000000010 /* OlleeAdvertisement.swift */,
 				A2000000000000000000000F /* OlleeSession.swift */,
 			);
 			path = Sources/OlleeFrames;
@@ -173,6 +176,7 @@
 				A10000000000000000000008 /* ClockCounter.swift in Sources */,
 				A10000000000000000000009 /* Light.swift in Sources */,
 				A1000000000000000000000D /* OlleeSession.swift in Sources */,
+				A1000000000000000000000E /* OlleeAdvertisement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

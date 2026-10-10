@@ -3,9 +3,17 @@ import CoreBluetooth
 import Foundation
 
 enum NUS {
-    static let service = CBUUID(string: "6E400001-B5A3-F393-E0A9-E50E24DCCA9E")
+    static let service = CBUUID(string: OlleeAdvertisement.nordicUARTService)
     static let rx = CBUUID(string: "6E400002-B5A3-F393-E0A9-E50E24DCCA9E")
     static let tx = CBUUID(string: "6E400003-B5A3-F393-E0A9-E50E24DCCA9E")
+}
+
+struct BLECandidate: Identifiable, Equatable {
+    let id: UUID
+    let name: String
+    let match: OlleeAdvertisement
+    let isLastUsed: Bool
+    let rssi: Int
 }
 
 enum ConnectionState: Equatable {
@@ -58,10 +66,12 @@ final class OlleeClient: NSObject, ObservableObject {
 
     @Published private(set) var state: ConnectionState = .idle
     @Published private(set) var deviceName: String?
+    @Published private(set) var candidates: [BLECandidate] = []
     @Published var lastError: String?
 
     private var central: CBCentralManager!
     private var peripheral: CBPeripheral?
+    private var discovered: [UUID: CBPeripheral] = [:]
     private var rx: CBCharacteristic?
     private var tx: CBCharacteristic?
     private var radio: CoreBluetoothNUS?
@@ -81,8 +91,18 @@ final class OlleeClient: NSObject, ObservableObject {
             noteBluetoothOff()
             return
         }
-        state = .scanning
-        central.scanForPeripherals(withServices: nil, options: nil)
+        if state == .scanning {
+            stopScan()
+            return
+        }
+        beginScan()
+    }
+
+    func connect(to id: UUID) {
+        guard let peripheral = discovered[id] else { return }
+        lastError = nil
+        clearCandidates()
+        connect(peripheral)
     }
 
     func setNameTag(_ text: String) async throws {
@@ -115,6 +135,26 @@ final class OlleeClient: NSObject, ObservableObject {
         return [0, 0, 0, 0]
     }
 
+    private func beginScan() {
+        if let peripheral, state == .ready || state == .connecting {
+            dropRadio()
+            rx = nil
+            tx = nil
+            deviceName = nil
+            central.cancelPeripheralConnection(peripheral)
+            self.peripheral = nil
+        }
+        clearCandidates()
+        state = .scanning
+        central.scanForPeripherals(withServices: nil, options: nil)
+    }
+
+    private func stopScan() {
+        central.stopScan()
+        clearCandidates()
+        state = .idle
+    }
+
     private func connect(_ peripheral: CBPeripheral) {
         central.stopScan()
         self.peripheral = peripheral
@@ -123,13 +163,57 @@ final class OlleeClient: NSObject, ObservableObject {
         central.connect(peripheral, options: nil)
     }
 
+    private func record(
+        peripheral: CBPeripheral,
+        name: String,
+        match: OlleeAdvertisement,
+        rssi: Int
+    ) {
+        guard state == .scanning else { return }
+        let id = peripheral.identifier
+        discovered[id] = peripheral
+        let display = OlleeAdvertisement.displayName(name)
+        let lastUsed = UserDefaults.standard.string(forKey: savedUUIDKey) == id.uuidString
+        if let index = candidates.firstIndex(where: { $0.id == id }) {
+            let existing = candidates[index]
+            let resolvedName = existing.name == "Unnamed UART" && display != "Unnamed UART"
+                ? display
+                : existing.name
+            let resolvedMatch = match.rank < existing.match.rank ? match : existing.match
+            candidates[index] = BLECandidate(
+                id: id,
+                name: resolvedName,
+                match: resolvedMatch,
+                isLastUsed: lastUsed,
+                rssi: max(existing.rssi, rssi)
+            )
+        } else {
+            candidates.append(
+                BLECandidate(id: id, name: display, match: match, isLastUsed: lastUsed, rssi: rssi)
+            )
+        }
+        candidates.sort { lhs, rhs in
+            if lhs.match.rank != rhs.match.rank { return lhs.match.rank < rhs.match.rank }
+            if lhs.rssi != rhs.rssi { return lhs.rssi > rhs.rssi }
+            return lhs.name.localizedStandardCompare(rhs.name) == .orderedAscending
+        }
+    }
+
+    private func clearCandidates() {
+        candidates = []
+        discovered = [:]
+    }
+
     private func fail(_ message: String) {
         lastError = message
         if state == .ready { return }
+        clearCandidates()
         state = .idle
     }
 
     private func noteBluetoothOff() {
+        central.stopScan()
+        clearCandidates()
         state = .poweredOff
         lastError = "Bluetooth is off"
     }
@@ -176,15 +260,18 @@ extension OlleeClient: CBCentralManagerDelegate {
         _ central: CBCentralManager,
         didDiscover peripheral: CBPeripheral,
         advertisementData: [String: Any],
-        rssi _: NSNumber
+        rssi: NSNumber
     ) {
         let name = peripheral.name
             ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String
             ?? ""
-        let services = advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] ?? []
-        let isOllee = name.localizedCaseInsensitiveContains("ollee") || services.contains(NUS.service)
-        guard isOllee else { return }
-        Task { @MainActor in self.connect(peripheral) }
+        let services = (advertisementData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] ?? [])
+            .map(\.uuidString)
+        guard let match = OlleeAdvertisement.match(name: name, advertisedServices: services) else { return }
+        let rssiValue = rssi.intValue
+        Task { @MainActor in
+            self.record(peripheral: peripheral, name: name, match: match, rssi: rssiValue)
+        }
     }
 
     nonisolated func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -212,8 +299,16 @@ extension OlleeClient: CBCentralManagerDelegate {
             self.dropRadio()
             self.rx = nil
             self.tx = nil
-            self.state = .idle
-            if let error { self.lastError = error.localizedDescription }
+            if self.peripheral?.identifier == peripheral.identifier {
+                self.peripheral = nil
+                self.deviceName = nil
+            }
+            if self.state != .scanning {
+                self.state = .idle
+            }
+            if let error, self.state != .scanning {
+                self.lastError = error.localizedDescription
+            }
         }
     }
 }

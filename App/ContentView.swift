@@ -14,6 +14,7 @@ struct ContentView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 connectionChip
+                deviceMenu
                 Image("Hero")
                     .resizable()
                     .scaledToFit()
@@ -28,8 +29,8 @@ struct ContentView: View {
                 lightRow
                 counterRow
                 ShortcutsLink()
-                if let message {
-                    Text(message)
+                if let banner = message ?? ollee.lastError {
+                    Text(banner)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -49,7 +50,31 @@ struct ContentView: View {
                 .background(.thinMaterial, in: Capsule())
         }
         .buttonStyle(.plain)
-        .accessibilityHint("Scan or reconnect. Hold ALARM on Clock, or tap until LAP blinks.")
+        .accessibilityHint("Scan or pick a device. Hold ALARM on Clock, or tap until LAP blinks.")
+    }
+
+    @ViewBuilder
+    private var deviceMenu: some View {
+        if ollee.state == .scanning, !ollee.candidates.isEmpty {
+            VStack(alignment: .leading, spacing: 8) {
+                ForEach(ollee.candidates) { candidate in
+                    Button {
+                        ollee.connect(to: candidate.id)
+                    } label: {
+                        HStack {
+                            Text(candidate.name)
+                            Spacer()
+                            if candidate.isLastUsed {
+                                Text("last used")
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                }
+            }
+        }
     }
 
     private var chipTitle: String {
