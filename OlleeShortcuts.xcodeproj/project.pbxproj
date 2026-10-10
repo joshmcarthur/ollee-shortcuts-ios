@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A10000000000000000000001 /* FreeOllee2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* FreeOllee2App.swift */; };
+		A10000000000000000000001 /* OlleeShortcutsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* OlleeShortcutsApp.swift */; };
 		A1000000000000000000000A /* OlleeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000C /* OlleeClient.swift */; };
 		A1000000000000000000000B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000D /* ContentView.swift */; };
 		A1000000000000000000000C /* OlleeIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2000000000000000000000E /* OlleeIntents.swift */; };
@@ -23,13 +23,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		A20000000000000000000001 /* FreeOllee2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeOllee2App.swift; sourceTree = "<group>"; };
+		A20000000000000000000001 /* OlleeShortcutsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeShortcutsApp.swift; sourceTree = "<group>"; };
 		A2000000000000000000000C /* OlleeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeClient.swift; sourceTree = "<group>"; };
 		A2000000000000000000000D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A2000000000000000000000E /* OlleeIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlleeIntents.swift; sourceTree = "<group>"; };
 		A20000000000000000000002 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A20000000000000000000003 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A20000000000000000000004 /* FreeOllee2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FreeOllee2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000004 /* OlleeShortcuts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OlleeShortcuts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A20000000000000000000006 /* CRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC16.swift; sourceTree = "<group>"; };
 		A20000000000000000000007 /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		A20000000000000000000008 /* NameTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTag.swift; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		A40000000000000000000002 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				A20000000000000000000001 /* FreeOllee2App.swift */,
+				A20000000000000000000001 /* OlleeShortcutsApp.swift */,
 				A2000000000000000000000D /* ContentView.swift */,
 				A2000000000000000000000E /* OlleeIntents.swift */,
 				A2000000000000000000000C /* OlleeClient.swift */,
@@ -76,7 +76,7 @@
 		A40000000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A20000000000000000000004 /* FreeOllee2.app */,
+				A20000000000000000000004 /* OlleeShortcuts.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,9 +99,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A50000000000000000000001 /* FreeOllee2 */ = {
+		A50000000000000000000001 /* OlleeShortcuts */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXNativeTarget "FreeOllee2" */;
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXNativeTarget "OlleeShortcuts" */;
 			buildPhases = (
 				A60000000000000000000001 /* Sources */,
 				A30000000000000000000001 /* Frameworks */,
@@ -111,9 +111,9 @@
 			);
 			dependencies = (
 			);
-			name = FreeOllee2;
-			productName = FreeOllee2;
-			productReference = A20000000000000000000004 /* FreeOllee2.app */;
+			name = OlleeShortcuts;
+			productName = OlleeShortcuts;
+			productReference = A20000000000000000000004 /* OlleeShortcuts.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +131,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A70000000000000000000002 /* Build configuration list for PBXProject "FreeOllee2" */;
+			buildConfigurationList = A70000000000000000000002 /* Build configuration list for PBXProject "OlleeShortcuts" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -144,7 +144,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A50000000000000000000001 /* FreeOllee2 */,
+				A50000000000000000000001 /* OlleeShortcuts */,
 			);
 		};
 /* End PBXProject section */
@@ -165,7 +165,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000001 /* FreeOllee2App.swift in Sources */,
+				A10000000000000000000001 /* OlleeShortcutsApp.swift in Sources */,
 				A1000000000000000000000A /* OlleeClient.swift in Sources */,
 				A1000000000000000000000B /* ContentView.swift in Sources */,
 				A1000000000000000000000C /* OlleeIntents.swift in Sources */,
@@ -242,7 +242,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.joshmcarthur.FreeOllee2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joshmcarthur.OlleeShortcuts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -273,7 +273,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.joshmcarthur.FreeOllee2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.joshmcarthur.OlleeShortcuts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -286,7 +286,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A70000000000000000000001 /* Build configuration list for PBXNativeTarget "FreeOllee2" */ = {
+		A70000000000000000000001 /* Build configuration list for PBXNativeTarget "OlleeShortcuts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A90000000000000000000003 /* Debug */,
@@ -295,7 +295,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A70000000000000000000002 /* Build configuration list for PBXProject "FreeOllee2" */ = {
+		A70000000000000000000002 /* Build configuration list for PBXProject "OlleeShortcuts" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A90000000000000000000001 /* Debug */,

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct FreeOllee2App: App {
+struct OlleeShortcutsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

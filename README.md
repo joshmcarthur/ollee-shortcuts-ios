@@ -32,7 +32,7 @@ RGB/backlight write is not published in the command catalogue used here (Gadgetb
 
 ```bash
 swift test                          # OlleeFrames, Linux- or macOS-runnable
-open FreeOllee2.xcodeproj           # iOS app; enable your team to run on a phone
+open OlleeShortcuts.xcodeproj       # iOS app; enable your team to run on a phone
 ```
 
 There are no third-party Swift package dependencies, and Dependabot watches GitHub Actions only.
