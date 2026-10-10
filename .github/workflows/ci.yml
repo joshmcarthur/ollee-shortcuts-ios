@@ -27,11 +27,11 @@ jobs:
         run: swift test
 
       - name: iOS Simulator build
-        if: hashFiles('FreeOllee2.xcodeproj/project.pbxproj') != ''
+        if: hashFiles('OlleeShortcuts.xcodeproj/project.pbxproj') != ''
         run: |
           xcodebuild \
-            -project FreeOllee2.xcodeproj \
-            -scheme FreeOllee2 \
+            -project OlleeShortcuts.xcodeproj \
+            -scheme OlleeShortcuts \
             -destination 'generic/platform=iOS Simulator' \
             -configuration Debug \
             CODE_SIGNING_ALLOWED=NO \

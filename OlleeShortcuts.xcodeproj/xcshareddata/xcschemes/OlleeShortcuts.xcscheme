@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A50000000000000000000001"
-               BuildableName = "FreeOllee2.app"
-               BlueprintName = "FreeOllee2"
-               ReferencedContainer = "container:FreeOllee2.xcodeproj">
+               BuildableName = "OlleeShortcuts.app"
+               BlueprintName = "OlleeShortcuts"
+               ReferencedContainer = "container:OlleeShortcuts.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A50000000000000000000001"
-            BuildableName = "FreeOllee2.app"
-            BlueprintName = "FreeOllee2"
-            ReferencedContainer = "container:FreeOllee2.xcodeproj">
+            BuildableName = "OlleeShortcuts.app"
+            BlueprintName = "OlleeShortcuts"
+            ReferencedContainer = "container:OlleeShortcuts.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A50000000000000000000001"
-            BuildableName = "FreeOllee2.app"
-            BlueprintName = "FreeOllee2"
-            ReferencedContainer = "container:FreeOllee2.xcodeproj">
+            BuildableName = "OlleeShortcuts.app"
+            BlueprintName = "OlleeShortcuts"
+            ReferencedContainer = "container:OlleeShortcuts.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
